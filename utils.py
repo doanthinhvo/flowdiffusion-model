@@ -6,8 +6,6 @@ from torchvision.transforms import Compose, ToTensor, Lambda, ToPILImage, Center
 from torchvision.datasets import Flowers102
 import numpy as np
 
-
-
 def exists(x):
     return x is not None
 
@@ -31,9 +29,6 @@ def num_to_groups(num, divisor):
         arr.append(remainder)
     return arr
 
-
-# data
-
 def get_reverse_transform():
      return Compose([
           Lambda(lambda t: (t + 1) / 2), # transform pixel range to (0, 1)
@@ -51,10 +46,9 @@ def get_transform():
           ])
 
 
-def get_data():
-     train_dataset = Flowers102(root="/home/anhtt1/workspace/phuclh15/Diffusion_model/dataset/flower_dataset",
+def get_data(data_path, batch_size):
+     train_dataset = Flowers102(root=data_path,
                       split='train', 
-                      transform=get_transform(),
-                      download=True)
-     dataloader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=2)
+                      transform=get_transform(), download=False)
+     dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2)
      return dataloader
