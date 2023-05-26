@@ -3,8 +3,9 @@ from modules import *
 import torch
 import torch.nn.functional as F
 from tqdm.auto import tqdm
+import torch.nn as nn
 
-class Diffusion:
+class Diffusion(nn.Module):
     def __init__(self, timesteps=1000, beta_start=1e-4, beta_end=0.02, img_size=256, device="cuda"):
         self.betas = linear_beta_schedule(timesteps=timesteps)
         # define alphas 
@@ -107,3 +108,7 @@ class Diffusion:
         noisy_image = get_reverse_transform()(x_noisy.squeeze())
 
         return noisy_image
+    
+    # return loss
+    def forward(self, denoise_model, x_start, t, noise=None, loss_type="l1"):
+        return self.p_losses(denoise_model, x_start, t, noise, loss_type)
