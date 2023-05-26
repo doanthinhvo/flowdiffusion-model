@@ -54,6 +54,7 @@ def get_transform():
 def get_data():
      train_dataset = Flowers102(root="/home/anhtt1/workspace/phuclh15/Diffusion_model/dataset/flower_dataset",
                       split='train', 
-                      transform=get_transform())
+                      transform=get_transform(),
+                      download=True)
      dataloader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=2)
      return dataloader
