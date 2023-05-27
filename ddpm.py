@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from tqdm.auto import tqdm
 
 class Diffusion:
-    def __init__(self, timesteps=1000, beta_start=1e-4, beta_end=0.02, img_size=256, device="cuda"):
+    def __init__(self, timesteps, beta_start=1e-4, beta_end=0.02, img_size=256, device="cuda"):
         self.betas = linear_beta_schedule(timesteps=timesteps)
         # define alphas 
         self.alphas = 1. - self.betas
