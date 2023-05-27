@@ -103,7 +103,7 @@ def launch():
     args.device = "cuda"
     args.lr = 8e-5
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
-    args.save_and_sample_every = 20
+    args.save_and_sample_every = 1000
     args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/baymax.pt"
     args.wandb_save_model=True
     train(args)
