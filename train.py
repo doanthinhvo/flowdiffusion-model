@@ -109,6 +109,7 @@ def launch():
     args.wandb_save_model=True
     train(args)
 if __name__ == '__main__':
+    wandb.login(keys="4d3dc8e91e95378b0774701cb2940c1b574bc368")
     launch()
 
 
