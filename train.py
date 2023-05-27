@@ -100,12 +100,12 @@ def launch():
     args.batch_size = 8
     args.channels = 3
     args.image_size = 64
-    args.data_path = "/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/data/"
+    args.data_path = "/kaggle/working/flowdiffusion-model/data/"
     args.device = "cuda"
     args.lr = 8e-5
-    args.results_path = f"/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
+    args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
     args.save_and_sample_every = 1
-    args.checkpoint_path = f"/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/checkpoints/baymax.pt"
+    args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/baymax.pt"
     args.wandb_save_model=True
     train(args)
 if __name__ == '__main__':
