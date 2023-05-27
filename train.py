@@ -72,7 +72,7 @@ def train(args):
             # print(len(dataloader))
             print("Epoch [%d], iter [%d], Loss: [%f]" %(epoch, overal_steps, loss.item()))
             
-            if step != 0 and overal_steps % args.save_and_sample_every == 0:
+            if overal_step != 0 and overal_steps % args.save_and_sample_every == 0:
                 # milestone = step // save_and_sample_every
                 num_images_sample = 32
                 all_images_list = diffusion.sample(model, args.image_size, batch_size=num_images_sample, channels=args.channels)
