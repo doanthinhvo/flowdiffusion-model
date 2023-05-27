@@ -83,7 +83,6 @@ def train(args):
 
                 wandb_image = wandb.Image(Image.open(str(results_folder / f'sample-{overal_steps}.png')), caption=f"Step {overal_steps}")
                 wandb.log({"Sample Image": wandb_image}, step=overal_steps)
-                
                 print("Images saved \n")
     save_checkpoint_local(model, optimizer, scheduler, args, args.checkpoint_path)
     # save_checkpoint_wandb(model, optimizer, scheduler, args)
@@ -96,7 +95,7 @@ def launch():
     args.debug = True
     args.run_name = "DDPM_Uncondtional"
     args.timesteps = 1000
-    args.epochs = 500
+    args.epochs = 6000
     args.batch_size = 128
     args.channels = 3
     args.image_size = 64
@@ -104,7 +103,7 @@ def launch():
     args.device = "cuda"
     args.lr = 8e-5
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
-    args.save_and_sample_every = 1000
+    args.save_and_sample_every = 20
     args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/baymax.pt"
     args.wandb_save_model=True
     train(args)
