@@ -72,8 +72,7 @@ def train(args):
             # print(len(dataloader))
             print("Epoch [%d], iter [%d], Loss: [%f]" %(epoch, overal_steps, loss.item()))
             
-            # if overal_steps != 0 and overal_steps % args.save_and_sample_every == 0:
-            if overal_steps == 0:
+            if overal_steps != 0 and overal_steps % args.save_and_sample_every == 0:
                 # milestone = step // save_and_sample_every
                 num_images_sample = 32
                 all_images_list = diffusion.sample(model, args.image_size, batch_size=num_images_sample, channels=args.channels)
@@ -100,12 +99,12 @@ def launch():
     args.batch_size = 128
     args.channels = 3
     args.image_size = 64
-    args.data_path = "/kaggle/input/deletesoon/flowdiffusion-model/data/"
+    args.data_path = "/kaggle/working/flowdiffusion-model/data/"
     args.device = "cuda"
     args.lr = 8e-5
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
     args.save_and_sample_every = 1000
-    args.checkpoint_path = f"/kaggle/input/deletesoon/flowdiffusion-model/checkpoints/baymax.pt"
+    args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/baymax.pt"
     args.wandb_save_model=True
     train(args)
 if __name__ == '__main__':
