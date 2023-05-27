@@ -22,7 +22,7 @@ def train(args):
     config=args
     )
     
-    dataloader = get_train_dataloader_debug(args.data_path, args.batch_size)
+    dataloader = get_train_dataloader(args.data_path, args.batch_size)
 
     model = Unet(
         dim=args.image_size,
@@ -95,16 +95,16 @@ def launch():
     args = parser.parse_args()
     args.debug = True
     args.run_name = "DDPM_Uncondtional"
-    args.timesteps = 3
-    args.epochs = 1
-    args.batch_size = 8
+    args.timesteps = 1000
+    args.epochs = 500
+    args.batch_size = 128
     args.channels = 3
     args.image_size = 64
     args.data_path = "/kaggle/working/flowdiffusion-model/data/"
     args.device = "cuda"
     args.lr = 8e-5
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
-    args.save_and_sample_every = 1
+    args.save_and_sample_every = 1000
     args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/baymax.pt"
     args.wandb_save_model=True
     train(args)
