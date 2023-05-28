@@ -19,6 +19,10 @@ def default(val, d):
 
 # exact the number alphas, betas, ... on the right timestep needed.
 
+def cycle(dl):
+    while True:
+        for data in dl:
+            yield data
 
 def extract(a, t, x_shape):
     # batch_size = t.shape[0]
@@ -92,15 +96,18 @@ def get_test_dataloader(data_path, batch_size):
 # function to save checkpoint. It can be used to save to WandB or local.
 
 
-def save_checkpoint_local(model, optimizer, scheduler, args, path):
+def save_checkpoint(model, optimizer, scheduler, args, path, steps, save_to_wandb=False):
+    ckpt_path = path + f"/checkpoint_step_{steps}.pt"
     checkpoint = {
         'model': model.state_dict(),
         'optimizer': optimizer.state_dict(),
         # 'scheduler': scheduler.state_dict(),
         'args': args
     }
-    torch.save(checkpoint, path)
-    print("saved checkpoint to {}".format(path))
+    torch.save(checkpoint, ckpt_path)
+    if save_to_wandb:
+        wandb.save(ckpt_path, base_path="./checkpoints/")
+    print("saved checkpoint to {}".format(ckpt_path))
 
 # function to load checkpoint. It can be used to load from WandB or local.
 def load_checkpoint_local(model, optimizer, scheduler, path):
@@ -110,17 +117,6 @@ def load_checkpoint_local(model, optimizer, scheduler, path):
     # scheduler.load_state_dict(checkpoint['scheduler'])
     args = checkpoint['args']
     return model, optimizer, scheduler, args
-
-
-def save_checkpoint_wandb(model, optimizer, scheduler, args):
-    checkpoint = {
-        'model': model.state_dict(),
-        'optimizer': optimizer.state_dict(),
-        # 'scheduler': scheduler.state_dict(),
-        'args': args
-    }
-    torch.save(checkpoint, 'checkpoint111.pt')
-    wandb.save('checkpoint_wandb.pt')
 
 def load_checkpoint_wandb(model, optimizer, scheduler, args):
     best_model = wandb.restore('checkpoint111.pt', run_path="blvrxdnthnhv/my-awesome-project/dl26eoml")
