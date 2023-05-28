@@ -161,7 +161,7 @@ cython_debug/
 #.idea/
 
 data/
-results/
+results/*
 
-checkpoints/
+checkpoints/*
 wandb/

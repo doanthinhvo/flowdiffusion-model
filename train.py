@@ -80,7 +80,7 @@ def train(args):
             
             wandb_image = wandb.Image(Image.open(str(results_folder / f'sample-{overal_steps}.png')), caption=f"Step {overal_steps}")
             wandb.log({" ---> sample image ": wandb_image}, step=overal_steps)
-            print("========== Sample images and Checkpoint are saved ========== \n")
+            print("========== sample images and checkpoint are saved ========== \n")
             save_checkpoint(model, optimizer, scheduler, args, args.checkpoint_path, overal_steps, args.save_to_wandb)
         overal_steps += 1
     wandb.finish()
@@ -90,17 +90,16 @@ def launch():
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
     args.save_to_wandb = True
-    args.debug = True
     args.run_name = "DDPM_Uncondtional"
-    args.timesteps = 3
-    args.train_num_steps = 10
-    args.batch_size = 7
+    args.timesteps = 1000
+    args.train_num_steps = 20000
+    args.batch_size = 128
     args.channels = 3
     args.image_size = 64
     # args.data_path = "/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/data/"
     args.data_path = "/kaggle/working/flowdiffusion-model/data/"
     args.device = "cuda"
-    args.lr = 8e-5
+    args.lr = 1e-4
     # args.results_path = f"/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"    
     args.save_and_sample_every = 3

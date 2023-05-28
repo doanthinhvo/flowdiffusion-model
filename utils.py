@@ -117,12 +117,3 @@ def load_checkpoint_local(model, optimizer, scheduler, path):
     # scheduler.load_state_dict(checkpoint['scheduler'])
     args = checkpoint['args']
     return model, optimizer, scheduler, args
-
-def load_checkpoint_wandb(model, optimizer, scheduler, args):
-    best_model = wandb.restore('checkpoint111.pt', run_path="blvrxdnthnhv/my-awesome-project/dl26eoml")
-    checkpoint = torch.load(best_model)
-    model.load_state_dict(checkpoint['model'])
-    optimizer.load_state_dict(checkpoint['optimizer'])
-    scheduler.load_state_dict(checkpoint['scheduler'])
-    args = checkpoint['args']
-    return model, optimizer, scheduler, epoch, step, args
