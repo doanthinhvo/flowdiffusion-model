@@ -102,7 +102,7 @@ def launch():
     args.lr = 1e-4
     # args.results_path = f"/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"    
-    args.save_and_sample_every = 3
+    args.save_and_sample_every = 1000
     # args.checkpoint_path = "/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/checkpoints/"
     args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/"
     args.wandb_save_model=True
