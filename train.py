@@ -18,7 +18,6 @@ from PIL import Image
 def train(args):
 
     wandb.init(
-    # set the wandb project where this run will be logged
     project="flower_diffsion",
     config=args
     )
@@ -58,7 +57,6 @@ def train(args):
         data = next(dataloader)
         optimizer.zero_grad()
         batch,_ = data
-        # print(batch)
         batch = batch.to(args.device)
         batch_size = batch.shape[0]
         # Algorithm 1 line 3: sample t uniformally for every example in the batch
@@ -66,7 +64,7 @@ def train(args):
 
         loss = diffusion.p_losses(model, batch, t, loss_type="l2")
 
-        # wandb.log({"loss": loss}, step=overal_steps)
+        wandb.log({"loss": loss}, step=overal_steps)
 
         loss.backward() # compute the gradients
         optimizer.step() # update the parameters.parameters still be on the model. call it by model.parameters()
@@ -74,20 +72,18 @@ def train(args):
         print("Step [%d], Loss: [%f]" %(overal_steps, loss.item()))
         
         if overal_steps != 0 and overal_steps % args.save_and_sample_every == 0:
-            # milestone = step // save_and_sample_every
             num_images_sample = 32
             all_images_list = diffusion.sample(model, args.image_size, batch_size=num_images_sample, channels=args.channels)
             all_images = all_images_list[-1]
             all_images = (all_images + 1) * 0.5
             save_image(torch.from_numpy(all_images), str(results_folder / f'sample-{overal_steps}.png'), nrow = 4)
             
-            # wandb_image = wandb.Image(Image.open(str(results_folder / f'sample-{overal_steps}.png')), caption=f"Step {overal_steps}")
-            # wandb.log({"Sample Image": wandb_image}, step=overal_steps)
-            print("Sample images and Checkpoint are saved \n")
+            wandb_image = wandb.Image(Image.open(str(results_folder / f'sample-{overal_steps}.png')), caption=f"Step {overal_steps}")
+            wandb.log({" ---> sample image ": wandb_image}, step=overal_steps)
+            print("========== Sample images and Checkpoint are saved ========== \n")
             save_checkpoint(model, optimizer, scheduler, args, args.checkpoint_path, overal_steps, args.save_to_wandb)
         overal_steps += 1
-    # save_checkpoint_wandb(model, optimizer, scheduler, args)
-    # wandb.finish()
+    wandb.finish()
 
 def launch():
     import argparse
@@ -108,7 +104,7 @@ def launch():
     # args.results_path = f"/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"
     args.results_path = f"/kaggle/working/flowdiffusion-model/results/{datetime.now().day}-{datetime.now().hour}_{datetime.now().minute}_{datetime.now().second}/"    
     args.save_and_sample_every = 3
-    args.checkpoint_path = "/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/checkpoints/"
+    # args.checkpoint_path = "/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/checkpoints/"
     args.checkpoint_path = f"/kaggle/working/flowdiffusion-model/checkpoints/"
     args.wandb_save_model=True
     train(args)
