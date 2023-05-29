@@ -5,9 +5,9 @@ from modules import Unet
 from torch import optim
 from ddpm import Diffusion
 
-checkpoint_path = '/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/checkpoints/checkpoint_step_1.pt'
+checkpoint_path = '/kaggle/input/deletesoon/flowdiffusion-model/checkpoints/baymax.pt'
 
-dl = get_train_dataloader("/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/data/", 16)
+dl = get_train_dataloader("/kaggle/input/deletesoon/flowdiffusion-model/data", 16)
 dataloader = cycle(dl)
 data = next(dataloader)
 batch,_ = data
