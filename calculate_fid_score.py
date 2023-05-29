@@ -4,12 +4,13 @@ from utils import *
 from einops import rearrange
 
 class FIDScore:
-    def __init__(self):
+    def __init__(self, device):
         self.inception_block_idx = 2048
         self.channels = 3 # remove
         block_idx = InceptionV3.BLOCK_INDEX_BY_DIM[self.inception_block_idx]
         self.inception_v3 = InceptionV3([block_idx])
-        self.inception_v3.to('cuda')
+        self.device = device
+        self.inception_v3.to(self.device)
 
     @torch.no_grad()
     def calculate_activation_statistics(self, samples):
@@ -36,9 +37,8 @@ class FIDScore:
         fid_value = calculate_frechet_distance(m1, s1, m2, s2)
         return fid_value
 
-
 if __name__ == '__main__':
-    fid_score = FIDScore()
+    fid_score = FIDScore(device='cuda')
     # real_samples = torch.randn(100, 3, 64, 64).to('cuda')
     # fake_samples = torch.randn(100, 3, 64, 64).to('cuda')
     train_dataloader = get_train_dataloader("/media/doanthinhvo/OS/Users/doant/Downloads/flowdiffusion-model/data/", 16)
